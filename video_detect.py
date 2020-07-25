@@ -21,7 +21,7 @@ def resize(image, size):
 def get_args():
     parser = argparse.ArgumentParser(description="Detect program for retinaface.")
     parser.add_argument('--video_path', type=str, default='video_record.avi', help='Path for image to detect')
-    parser.add_argument('--model_path', type=str, help='Path for model')
+    parser.add_argument('--model_path', type=str, help='Path for model', default='./model.pt')
     parser.add_argument('--depth', help='Resnet depth, must be one of 18, 34, 50, 101, 152', type=int, default=50)
     parser.add_argument('--scale', type=float, default=1.0, help='Image resize scale', )
     args = parser.parse_args()
