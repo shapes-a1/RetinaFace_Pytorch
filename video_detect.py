@@ -22,7 +22,6 @@ def get_args():
     parser = argparse.ArgumentParser(description="Detect program for retinaface.")
     parser.add_argument('--video_path', type=str, default='video_record.avi', help='Path for image to detect')
     parser.add_argument('--model_path', type=str, help='Path for model')
-    parser.add_argument('--save_path', type=str, default='./out/result.avi', help='Path for result image')
     parser.add_argument('--depth', help='Resnet depth, must be one of 18, 34, 50, 101, 152', type=int, default=50)
     parser.add_argument('--scale', type=float, default=1.0, help='Image resize scale', )
     args = parser.parse_args()
@@ -46,21 +45,19 @@ def main():
 
     # Read video
     cap = cv2.VideoCapture(args.video_path)
-
-    codec = cv2.VideoWriter_fourcc(*'MJPG')
+    fps = cap.get(cv2.CAP_PROP_FPS)
 
     width = int(cap.get(3))
     height = int(cap.get(4))
 
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
-    fps = 25.0
 
-    out = cv2.VideoWriter('args.save_path', codec, fps, (width, height))
+    out = cv2.VideoWriter('{}_retinaface.mp4'.format(args.video_path.split('.')[0]), 0x7634706d, fps, (width, height))
 
     font = cv2.FONT_HERSHEY_SIMPLEX
 
-    while(True):
+    while True:
         ret, img = cap.read()
 
         if not ret:
@@ -97,15 +94,9 @@ def main():
                                 thickness=1, lineType=cv2.LINE_AA, color=(255, 255, 255))
 
         out.write(img)
-        cv2.imshow('RetinaFace-Pytorch',img)
-        key = cv2.waitKey(1)
-        if key == ord('q'):
-            print('Now quit.')
-            break
 
     cap.release()
     out.release()
-    cv2.destroyAllWindows()
 
 if __name__=='__main__':
     main()
