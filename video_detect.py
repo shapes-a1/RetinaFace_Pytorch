@@ -53,7 +53,7 @@ def main():
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
-    out = cv2.VideoWriter('{}_retinaface.mp4'.format(args.video_path.split('.')[0]), 0x7634706d, fps, (width, height))
+    out = cv2.VideoWriter('{}_retinaface_res50.mp4'.format(args.video_path.split('.')[0]), 0x7634706d, fps, (width, height))
 
     font = cv2.FONT_HERSHEY_SIMPLEX
 
